@@ -6,7 +6,7 @@ import android.opengl.GLSurfaceView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.sunnyday.constraintlayout.opengles.render.OpenGlRender
+import com.sunnyday.constraintlayout.opengles.render.AirHockeyRender
 
 class MainActivity : AppCompatActivity() {
     private lateinit var glSurfaceView: GLSurfaceView
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             //设置要使用的EGLContext client version
             glSurfaceView.setEGLContextClientVersion(2)
             //设置渲染器
-            glSurfaceView.setRenderer(OpenGlRender())
+            glSurfaceView.setRenderer(AirHockeyRender())
             rendererSet = true
         } else {
             Toast.makeText(

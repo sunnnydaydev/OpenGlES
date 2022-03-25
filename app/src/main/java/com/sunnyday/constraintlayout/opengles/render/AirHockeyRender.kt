@@ -8,7 +8,7 @@ import javax.microedition.khronos.opengles.GL10
 /**
  * Create by SunnyDay on 20:26 2021/12/26
  */
-class OpenGlRender : GLSurfaceView.Renderer {
+class AirHockeyRender : GLSurfaceView.Renderer {
     /**
      * 当绘制一帧时这个方法会被GLSurfaceView调用。
      * ps：在这个方法中一定要绘制些东西，即使是一个清空屏幕的操作，
