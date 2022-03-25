@@ -8,4 +8,4 @@
 
 # 知识点
 
-[1、入门篇](app\src\main\java\com\sunnyday\constraintlayout\opengles\1、入门篇.md)
+[1、入门篇](https://github.com/sunnnydaydev/OpenGLES/blob/master/mds/1、入门篇.md)
