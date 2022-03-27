@@ -2,6 +2,8 @@ package com.sunnyday.constraintlayout.opengles.render
 
 import android.opengl.GLES20.*
 import android.opengl.GLSurfaceView
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -11,16 +13,41 @@ import javax.microedition.khronos.opengles.GL10
 class AirHockeyRender : GLSurfaceView.Renderer {
     companion object {
         private const val POSITION_COMPONENT_COUNT = 2
+        private const val BYTE_PER_FLOAT = 4
     }
 
     init {
-        //顶点属性数组
+        //矩形顶点属性数组
         val tableVertices = floatArrayOf(
             0f, 0f,
             0f, 14f,
             9f, 14f,
             9f, 0f
         )
+        // 矩形就是两个三角形，注意逆时针顺序定义。
+        val tableVerticesWithTriangle = floatArrayOf(
+            //第一个三角形
+            0f, 0f,
+            9f, 14f,
+            0f, 14f,
+            // 第二个三角形
+            0f, 0f,
+            9f, 0f,
+            9f, 14f,
+            // 中间的分割线
+            0f, 7f,
+            9f, 7f,
+            // 两木追顶点
+            4.5f, 2f,
+            4.5f, 12f
+        )
+        //吧内存从java堆赋值到本地堆
+        val vertexData = ByteBuffer
+            .allocateDirect(tableVerticesWithTriangle.size * BYTE_PER_FLOAT)
+            .order(ByteOrder.nativeOrder())
+            .asFloatBuffer()
+            .put(tableVerticesWithTriangle)
+
     }
 
     /**
