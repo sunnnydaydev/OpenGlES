@@ -13,6 +13,7 @@ import javax.microedition.khronos.opengles.GL10
 class AirHockeyRender : GLSurfaceView.Renderer {
     companion object {
         private const val POSITION_COMPONENT_COUNT = 2
+        // 每个float变量所占字节数
         private const val BYTE_PER_FLOAT = 4
     }
 
@@ -41,12 +42,13 @@ class AirHockeyRender : GLSurfaceView.Renderer {
             4.5f, 2f,
             4.5f, 12f
         )
-        //吧内存从java堆赋值到本地堆
+
+        //定义分配本地堆数据，这样着色器就可以读取本地的数据了。
         val vertexData = ByteBuffer
             .allocateDirect(tableVerticesWithTriangle.size * BYTE_PER_FLOAT)
             .order(ByteOrder.nativeOrder())
             .asFloatBuffer()
-            .put(tableVerticesWithTriangle)
+            .put(tableVerticesWithTriangle) //吧内存从java堆赋值到本地堆
 
     }
 
