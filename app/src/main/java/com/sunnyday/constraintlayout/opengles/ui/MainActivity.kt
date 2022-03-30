@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             //设置要使用的EGLContext client version
             glSurfaceView.setEGLContextClientVersion(2)
             //设置渲染器
-            glSurfaceView.setRenderer(AirHockeyRender())
+            glSurfaceView.setRenderer(AirHockeyRender(applicationContext))
             rendererSet = true
         } else {
             Toast.makeText(
