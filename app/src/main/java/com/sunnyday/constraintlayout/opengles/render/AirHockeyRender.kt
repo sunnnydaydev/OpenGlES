@@ -4,6 +4,7 @@ import android.content.Context
 import android.opengl.GLES20.*
 import android.opengl.GLSurfaceView
 import com.sunnyday.constraintlayout.opengles.R
+import com.sunnyday.constraintlayout.opengles.helper.ShaderHelper
 import com.sunnyday.constraintlayout.opengles.utils.TextResourceReader
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -13,9 +14,10 @@ import javax.microedition.khronos.opengles.GL10
 /**
  * Create by SunnyDay on 20:26 2021/12/26
  */
-class AirHockeyRender(private val mContext:Context) : GLSurfaceView.Renderer {
+class AirHockeyRender(private val mContext: Context) : GLSurfaceView.Renderer {
     companion object {
         private const val POSITION_COMPONENT_COUNT = 2
+
         // 每个float变量所占字节数
         private const val BYTE_PER_FLOAT = 4
     }
@@ -88,7 +90,12 @@ class AirHockeyRender(private val mContext:Context) : GLSurfaceView.Renderer {
          * [0,1]代表颜色强度。如下屏幕清空会显示红色。
          * */
         glClearColor(1f, 0f, 0f, 0f)
-        val vertexShaderSource = TextResourceReader.readTextFileFromResource(mContext, R.raw.simple_vertex_shader)
-        val fragmentShaderSource = TextResourceReader.readTextFileFromResource(mContext, R.raw.simple_fragment_shader)
+        // 读取、编译、获取着色器
+        val vertexShaderSource =
+            TextResourceReader.readTextFileFromResource(mContext, R.raw.simple_vertex_shader)
+        val fragmentShaderSource =
+            TextResourceReader.readTextFileFromResource(mContext, R.raw.simple_fragment_shader)
+        val vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource)
+        val fragmentShader = ShaderHelper.compileFragmentShader(fragmentShaderSource)
     }
 }

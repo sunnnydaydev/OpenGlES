@@ -7,6 +7,6 @@ import com.sunnyday.constraintlayout.opengles.BuildConfig
  */
 class LoggerConfig {
     companion object{
-        private val isOpenLogger = BuildConfig.DEBUG
+         val isOpenLogger = BuildConfig.DEBUG
     }
 }
