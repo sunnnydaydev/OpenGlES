@@ -15,6 +15,8 @@ import javax.microedition.khronos.opengles.GL10
  * Create by SunnyDay on 20:26 2021/12/26
  */
 class AirHockeyRender(private val mContext: Context) : GLSurfaceView.Renderer {
+    private var program = 0
+
     companion object {
         private const val POSITION_COMPONENT_COUNT = 2
 
@@ -97,5 +99,6 @@ class AirHockeyRender(private val mContext: Context) : GLSurfaceView.Renderer {
             TextResourceReader.readTextFileFromResource(mContext, R.raw.simple_fragment_shader)
         val vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource)
         val fragmentShader = ShaderHelper.compileFragmentShader(fragmentShaderSource)
+        program = ShaderHelper.linkProgram(vertexShader, fragmentShader)
     }
 }

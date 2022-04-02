@@ -11,7 +11,6 @@ class ShaderHelper {
 
     companion object {
         //编译状态
-        private val compileStatus = IntArray(1)
         private const val TAG = "ShaderHelper"
 
         /**
@@ -36,18 +35,23 @@ class ShaderHelper {
          * @param shaderCode 着色器代码
          * */
         private fun compileShader(type: Int, shaderCode: String): Int {
+            val compileStatus = IntArray(1)
             //创建着色器对象。返回的int值代表OpenGl对象的引用。返回0代表创建对象失败。
             val shaderObjectId = glCreateShader(type)
+            // print log to android platform.
+            if (LoggerConfig.isOpenLogger) {
+                MyLog.d {
+                    "Result of compiling source: \n $shaderCode \n ${
+                        glGetShaderInfoLog(
+                            shaderObjectId
+                        )
+                    }"
+                }
+            }
             if (compileStatus[0] == 0) {
                 glDeleteShader(shaderObjectId)
-                if (LoggerConfig.isOpenLogger) {
-                    MyLog.d {
-                        "Result of compiling source: \n $shaderCode \n ${
-                            glGetShaderInfoLog(
-                                shaderObjectId
-                            )
-                        }"
-                    }
+                MyLog.d {
+                    "Compilation of shader failed."
                 }
                 return 0
             }
@@ -64,7 +68,26 @@ class ShaderHelper {
          * 链接OpenGl的程序：可以在多个程序中使用同一个着色器。
          * */
         fun linkProgram(vertexShaderId: Int, fragmentShaderId: Int): Int {
-
+            val linkStatus = IntArray(1)
+            val programObjectId = glCreateProgram()
+            // print log to android platform.
+            if (LoggerConfig.isOpenLogger) {
+                MyLog.d {
+                    "Result of linking program: \n ${glGetShaderInfoLog(programObjectId)}"
+                }
+            }
+            if (linkStatus[0] == 0) {
+                glDeleteProgram(programObjectId)
+                MyLog.d {
+                    "Linking of program failed."
+                }
+                return 0
+            }
+            //附上着色器
+            glAttachShader(programObjectId, vertexShaderId)
+            glAttachShader(programObjectId, fragmentShaderId)
+            glGetProgramiv(programObjectId, GL_LINK_STATUS,linkStatus, 0)
+            return programObjectId
         }
     }
 }
