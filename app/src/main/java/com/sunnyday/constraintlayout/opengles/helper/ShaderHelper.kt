@@ -86,8 +86,21 @@ class ShaderHelper {
             //附上着色器
             glAttachShader(programObjectId, vertexShaderId)
             glAttachShader(programObjectId, fragmentShaderId)
-            glGetProgramiv(programObjectId, GL_LINK_STATUS,linkStatus, 0)
+            glGetProgramiv(programObjectId, GL_LINK_STATUS, linkStatus, 0)
             return programObjectId
+        }
+
+        /**
+         *验证OpenGl程序对象
+         * */
+        fun validateProgram(programObjectId: Int): Boolean {
+            glValidateProgram(programObjectId)
+            val validateStatus = IntArray(1)
+            glGetProgramiv(programObjectId, GL_VALIDATE_STATUS, validateStatus, 0)
+            MyLog.d {
+                ""
+            }
+            return validateStatus[0] != 0
         }
     }
 }
