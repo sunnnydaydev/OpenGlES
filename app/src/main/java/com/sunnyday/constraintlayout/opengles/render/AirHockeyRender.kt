@@ -5,6 +5,7 @@ import android.opengl.GLES20.*
 import android.opengl.GLSurfaceView
 import com.sunnyday.constraintlayout.opengles.R
 import com.sunnyday.constraintlayout.opengles.helper.ShaderHelper
+import com.sunnyday.constraintlayout.opengles.utils.LoggerConfig
 import com.sunnyday.constraintlayout.opengles.utils.TextResourceReader
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -16,12 +17,15 @@ import javax.microedition.khronos.opengles.GL10
  */
 class AirHockeyRender(private val mContext: Context) : GLSurfaceView.Renderer {
     private var program = 0
+    private var uColorLocation: Int = 0
+    private var aPositionLocation: Int = 0
 
     companion object {
         private const val POSITION_COMPONENT_COUNT = 2
-
         // 每个float变量所占字节数
         private const val BYTE_PER_FLOAT = 4
+        private const val U_COLOR = "u_Color"
+        private const val A_POSITION = "a_Position"
     }
 
     init {
@@ -79,6 +83,15 @@ class AirHockeyRender(private val mContext: Context) : GLSurfaceView.Renderer {
          * 设置视口（Viewport）尺寸，也即告诉OpenGL渲染view的大小。
          * */
         glViewport(0, 0, width, height)
+        // 验证程序
+        if (LoggerConfig.isOpenLogger) {
+            ShaderHelper.validateProgram(program)
+        }
+        // 使用程序
+        glUseProgram(program)
+        //获取uniform位置
+        uColorLocation = glGetUniformLocation(program, U_COLOR)
+        aPositionLocation = glGetAttribLocation(program, A_POSITION)
     }
 
     /**
