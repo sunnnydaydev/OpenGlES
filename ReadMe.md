@@ -9,3 +9,5 @@
 # 知识点
 
 [1、入门篇](https://github.com/sunnnydaydev/OpenGLES/blob/master/mds/1、入门篇.md)
+
+[1、顶点和着色器](https://github.com/sunnnydaydev/OpenGLES/blob/master/mds/2、顶点和着色器.md)
