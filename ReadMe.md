@@ -4,7 +4,7 @@
 
 [基础](./mds/基础.md)
 
-[入门篇](https://github.com/sunnnydaydev/OpenGLES/blob/master/mds/1、入门篇.md)
+[入门篇](./mds/1、OpenGL初始化.md)
 
 [顶点和着色器](https://github.com/sunnnydaydev/OpenGLES/blob/master/mds/2、顶点和着色器.md)
 
