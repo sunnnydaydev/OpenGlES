@@ -1,4 +1,4 @@
-package com.sunnyday.constraintlayout.opengles.ui
+package com.sunnyday.constraintlayout.opengles.practice.activity
 
 import android.app.ActivityManager
 import android.content.Context
@@ -6,12 +6,12 @@ import android.opengl.GLSurfaceView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.sunnyday.constraintlayout.opengles.R
+import com.sunnyday.constraintlayout.opengles.practice.render.InitRender
 import com.sunnyday.constraintlayout.opengles.render.AirHockeyRender
-import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class InitActivity : AppCompatActivity() {
     private lateinit var glSurfaceView: GLSurfaceView
-
     /**
      * 标记是否已经启用渲染器。方便处理生命周期问题。
      * */
@@ -23,10 +23,9 @@ class MainActivity : AppCompatActivity() {
         glSurfaceView = GLSurfaceView(this)
         val isSupportES2 = isSupportES2(applicationContext)
         if (isSupportES2) {
-            //设置要使用的EGLContext client version
+            //2、配置OpenGL
             glSurfaceView.setEGLContextClientVersion(2)
-            //设置渲染器
-            glSurfaceView.setRenderer(AirHockeyRender(applicationContext))
+            glSurfaceView.setRenderer(InitRender(applicationContext))
             rendererSet = true
         } else {
             Toast.makeText(applicationContext, "This device does not support OpenGL ES 2.0 !", Toast.LENGTH_SHORT).show()
@@ -35,6 +34,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(glSurfaceView)
     }
 
+    /**
+     * 处理生命周期
+     * */
     override fun onPause() {
         super.onPause()
         if (rendererSet) glSurfaceView.onPause()
